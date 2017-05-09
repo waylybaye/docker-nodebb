@@ -34,6 +34,7 @@ ENV S3_UPLOADS_HOST ''
 
 RUN apt-get update && apt-get install -y gettext-base ssmtp
 
+VOLUME /opt/nodebb
 WORKDIR /opt/nodebb
 ADD https://github.com/NodeBB/NodeBB/archive/${NODEBB_VERSION}.tar.gz /opt/nodebb.tar.gz
 RUN tar xvzf /opt/nodebb.tar.gz -C /opt/nodebb --strip 1
@@ -44,5 +45,6 @@ ADD conf/ssmtp.conf.template /etc/ssmtp/ssmtp.conf.template
 
 RUN npm install --production
 RUN /usr/local/bin/install-plugins.sh $NODEBB_BUILD_PLUGINLIST
+EXPOSE 4567
 
 CMD /usr/local/bin/start.sh
